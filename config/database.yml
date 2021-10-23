@@ -80,7 +80,4 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: ynab_production
-  username: ynab
-  password: <%= ENV["YNAB_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
