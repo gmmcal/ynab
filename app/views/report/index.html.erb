@@ -1,0 +1,26 @@
+<div class="col-3 ps-3 pt-2">
+    <div class="pt-1 pb-1">
+        <h3>Years</h3>
+        <% @years.each do |year| %>
+            <%=link_to year, category_path(year, @category&.name), class: 'btn btn-secondary m-1'%>
+        <% end %>
+    </div>
+
+    <div class="pt-1 pb-1">
+        <h3>Categories</h3>
+        <%=link_to "All", year_path(@year), class: 'btn btn-primary m-1'%>
+        <% @categories.each do |category| %>
+            <%=link_to category, category_path(@year, category), class: 'btn btn-primary m-1'%>
+        <% end %>
+    </div>
+</div>
+
+<div class="col-9 pt-2">
+    <h1>Report <%= @category&.name%>/<%= @year %></h1>
+
+    <% if @category %>
+        <%= column_chart @data, legend: false %>
+    <% else %>
+        <%= line_chart @data %>
+    <% end %>
+</div>
