@@ -1,1 +1,1 @@
-Groupdate.time_zone = "Europe/Amsterdam"
+Groupdate.time_zone = "UTC"

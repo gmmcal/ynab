@@ -1,6 +1,5 @@
 class ReportController < ApplicationController
   def index
-    Time.zone = "Europe/Amsterdam"
     date = Date.today
     if params[:year]
       date = "#{params[:year]}-01-01".to_date
