@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class CreateCategories < ActiveRecord::Migration[7.0]
   def change
-    create_table :categories do |t|
-      t.string :name
-      t.string :note
-      t.boolean :visible, default: false
+    create_table :categories do |table|
+      table.string :name
+      table.string :note
+      table.boolean :visible, default: false
 
-      t.timestamps
+      table.timestamps
     end
   end
 end

@@ -1,34 +1,36 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.0"
+ruby '3.0.0'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.0.alpha2"
+gem 'rails', '~> 7.0.0.alpha2'
 
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem 'puma', '~> 5.0'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails", ">= 0.3.4"
+gem 'importmap-rails', '>= 0.3.4'
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", ">= 0.7.11"
+gem 'turbo-rails', '>= 0.7.11'
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails", ">= 0.4.0"
+gem 'stimulus-rails', '>= 0.4.0'
 
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "cssbundling-rails", ">= 0.1.0"
+gem 'cssbundling-rails', '>= 0.1.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", ">= 1.4.4", require: false
+gem 'bootsnap', '>= 1.4.4', require: false
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -38,14 +40,19 @@ gem "bootsnap", ">= 1.4.4", require: false
 
 group :development, :test do
   # Start debugger with binding.b [https://github.com/ruby/debug]
-  gem "debug", ">= 1.0.0", platforms: %i[ mri mingw x64_mingw ]
+  gem 'debug', '>= 1.0.0', platforms: %i[mri mingw x64_mingw]
 
-  gem "dotenv-rails"
+  gem 'dotenv-rails'
 end
 
 group :development do
+  gem 'brakeman'
+  gem 'reek'
+  gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'scss_lint', require: false
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console", ">= 4.1.0"
+  gem 'web-console', '>= 4.1.0'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler", ">= 2.3.3"
@@ -56,13 +63,13 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara", ">= 3.26"
-  gem "selenium-webdriver"
-  gem "webdrivers"
+  gem 'capybara', '>= 3.26'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
 
-gem "chartkick"
+gem 'chartkick'
 
-gem "groupdate"
+gem 'groupdate'
 
-gem "ynab"
+gem 'ynab'

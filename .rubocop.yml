@@ -1,0 +1,18 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.0
+  DisplayCopNames: true
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false

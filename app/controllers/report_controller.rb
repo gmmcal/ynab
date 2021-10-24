@@ -1,18 +1,35 @@
+# frozen_string_literal: true
+
 class ReportController < ApplicationController
+  before_action :year, :report, :category
   def index
-    date = Date.today
-    if params[:year]
-      date = "#{params[:year]}-01-01".to_date
-    end
-    @year = date.year
+    @data = @report.with_visible_categories.within_range(range).grouped.sum(:activity)
+  end
+
+  private
+
+  def date
+    return "#{params[:year]}-01-01".to_date if params[:year]
+
+    Time.zone.today
+  end
+
+  def category
+    return unless params[:category]
+
+    @category = Category.find_by(name: params[:category])
+    @report = @report.where(category: @category)
+  end
+
+  def report
     @report = Report.all
-    if params[:category]
-      @category = Category.find_by(name: params[:category])
-      @report = @report.where(category: @category)
-    end
-    @categories = Category.visible.map(&:name).uniq.sort
-    @years = Report.all.map { |r| r.date.year }.uniq.sort
-    range = (date.beginning_of_year..date.end_of_year)
-    @data = @report.includes(:category).where(category: { visible: true }).where(date: range).group(:name).group_by_month(:date).sum(:activity)
+  end
+
+  def year
+    @year = date.year
+  end
+
+  def range
+    date.all_year
   end
 end
