@@ -12,8 +12,8 @@ class Importer
       process_months
     end
     'Data successfully imported'
-  rescue StandardError => e
-    "ERROR: id=#{e.id}; name=#{e.name}; detail: #{e.detail}"
+  rescue StandardError => error
+    "ERROR: id=#{error.id}; name=#{error.name}; detail: #{error.detail}"
   end
 
   private
@@ -54,7 +54,7 @@ class Importer
   end
 
   def budget
-    budgets.first
+    budgets.select { |budget| budget.name == 'Personal' }.first
   end
 
   def budgets

@@ -5,7 +5,7 @@ class CreateCategories < ActiveRecord::Migration[7.0]
     create_table :categories do |table|
       table.string :name
       table.string :note
-      table.boolean :visible, default: false
+      table.boolean :visible, default: false, null: false
 
       table.timestamps
     end
