@@ -11,14 +11,16 @@ class Importer
     ActiveRecord::Base.transaction do
       process_months
     end
-    'Data successfully imported'
-  rescue StandardError => error
-    "ERROR: id=#{error.id}; name=#{error.name}; detail: #{error.detail}"
+    Rails.logger.info { 'Data successfully imported' }
+  rescue StandardError => e
+    Rails.logger.info { "ERROR: id=#{e.id}; name=#{e.name}; detail: #{e.detail}" }
+    nil
   end
 
   private
 
   def cleanup
+    Rails.logger.info { 'Cleaning old reports' }
     Report.delete_all
   end
 
@@ -34,12 +36,15 @@ class Importer
     Category.find_or_create_by(name: name)
   end
 
-  def update_category(category, note)
+  def update_category(category, note, visible)
+    Rails.logger.info { "Updating #{category.name}" }
     category.note = note
+    category.visible = visible
     category.save
   end
 
   def create(category, month)
+    Rails.logger.info { "Creating report for #{category.name} on #{month}" }
     Report.create(
       category: parent(category.name),
       budgeted: category.budgeted / 1000.0,
@@ -71,7 +76,7 @@ class Importer
   end
 
   def process_category(category, month)
-    update_category(parent(category.name), category.note)
+    update_category(parent(category.name), category.note, !category.hidden)
     create(category, month)
   end
 end

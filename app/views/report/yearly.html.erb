@@ -1,0 +1,10 @@
+<turbo-frame id="line">
+    <div id="chart"></div>
+    <script>
+    title = '<%= @year%>'
+    subtitle = null
+    type = 'spline'
+    dates = <%=raw @dates.to_json%>
+    values = <%=raw @values.to_json%>
+    </script>
+<turbo-frame>

@@ -19,8 +19,8 @@
     <h1>Report <%= @category&.name%>/<%= @year %></h1>
 
     <% if @category %>
-        <%= column_chart @data %>
+        <turbo-frame id="column" src="<%= report_category_path(year: @year, category: @category.name) %>"></turbo-frame>
     <% else %>
-        <%= line_chart @data %>
+        <turbo-frame id="line" src="<%= report_yearly_path(year: @year) %>"></turbo-frame>
     <% end %>
 </div>

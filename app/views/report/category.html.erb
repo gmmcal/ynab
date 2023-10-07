@@ -1,0 +1,10 @@
+<turbo-frame id="column">
+    <div id="chart"></div>
+    <script>
+    title = '<%= @category.name %>'
+    subtitle = '<%= @year %>'
+    type = 'column'
+    dates = <%=raw @dates.to_json %>
+    values = <%=raw @values.to_json %>
+    </script>
+<turbo-frame>
