@@ -5,12 +5,16 @@ Rails.application.routes.draw do
   root 'report#index'
 
   scope 'report' do
-    get '/:year', to: 'report#yearly', as: :report_yearly
-    get '/:year/(:category)', to: 'report#category', as: :report_category
+    get '/', to: 'report#all'
+    get '/(:year)', to: 'report#yearly', constraints: { year: /\d*/ }
+    get '/(:category)', to: 'report#category'
+    get '/(:year)/(:category)', to: 'report#category', as: :report, constraints: { year: /\d*/ }
   end
 
-  scope ':year' do
-    get '/', to: 'report#index', as: :year
+  scope '' do
+    get '/', to: 'report#index'
+    get '/(:year/)(:category)', to: 'report#index', as: :category_year, constraints: { year: /\d*/ }
+    get '/(:year)', to: 'report#index', as: :year, constraints: { year: /\d*/ }
     get '/(:category)', to: 'report#index', as: :category
   end
 end

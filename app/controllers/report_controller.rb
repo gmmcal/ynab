@@ -1,8 +1,20 @@
 # frozen_string_literal: true
 
 class ReportController < ApplicationController
-  before_action :year, :report, :load_category
+  before_action :report, :load_category, :year
   def index; end
+
+  def all
+    reports = @report.with_visible_categories.select(:date, :activity, :category_id, :name)
+    @dates = reports.pluck(:date).uniq.sort
+    @values = reports.group_by(&:name).map do |name, value|
+      {
+        name: name,
+        data: extract_data(value),
+        marker: { symbol: 'circle' },
+      }
+    end
+  end
 
   def yearly
     reports = @report.with_visible_categories.select(:date, :activity, :category_id, :name)
@@ -47,11 +59,14 @@ class ReportController < ApplicationController
   end
 
   def report
-    @report = Report.within_range(range).order(:date)
+    @report = Report.order(:date)
   end
 
   def year
+    return unless params[:year]
+
     @year = date.year
+    @report = @report.within_range(range)
   end
 
   def range
