@@ -4,7 +4,7 @@
     title = 'All data'
     subtitle = null
     type = 'spline'
-    dates = <%=raw @dates.to_json%>
-    values = <%=raw @values.to_json%>
+    dates = <%=raw dates(@reports).to_json %>
+    values = <%=raw values(@reports).to_json %>
     </script>
 <turbo-frame>

@@ -4,7 +4,7 @@
     title = '<%= @category.name %>'
     subtitle = '<%= @year %>'
     type = 'column'
-    dates = <%=raw @dates.to_json %>
-    values = <%=raw @values.to_json %>
+    dates = <%=raw dates(@reports).to_json %>
+    values = <%=raw category_values(@reports).to_json %>
     </script>
 <turbo-frame>
