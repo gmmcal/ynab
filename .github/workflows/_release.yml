@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+          tag: ${{ inputs.tag }}
+
+  deploy:
+    name: Deploy
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    needs: release

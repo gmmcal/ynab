@@ -1,0 +1,61 @@
+name: Pipeline
+
+on:
+  - pull_request
+
+jobs:
+  build:
+    name: Test
+    uses: ./.github/workflows/_docker.yml
+    secrets: inherit
+
+  development:
+    name: Development
+    uses: ./.github/workflows/_docker.yml
+    secrets: inherit
+    with:
+      target: development
+      publish: false
+
+  production:
+    name: Production
+    uses: ./.github/workflows/_docker.yml
+    secrets: inherit
+    with:
+      target: production
+      publish: false
+
+  rubocop:
+    name: Rubocop
+    uses: ./.github/workflows/_lint.yml
+    with:
+      command: bundle exec rubocop --config .rubocop.yml .
+    needs: build
+
+  reek:
+    name: Reek
+    uses: ./.github/workflows/_lint.yml
+    with:
+      command: bundle exec reek --config .reek.yml .
+    needs: build
+
+  brakeman:
+    name: Brakeman
+    uses: ./.github/workflows/_lint.yml
+    with:
+      command: bundle exec brakeman
+    needs: build
+
+  tests:
+    name: Backend
+    uses: ./.github/workflows/_tests.yml
+    with:
+      command: bundle exec rails test
+    needs: build
+
+  bundler-audit:
+    name: Bundler Audit
+    uses: ./.github/workflows/_lint.yml
+    with:
+      command: bundle exec bundle-audit check --update
+    needs: build

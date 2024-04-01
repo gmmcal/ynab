@@ -3,14 +3,11 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.2
   DisplayCopNames: true
   NewCops: enable
   Exclude:
-    - 'bin/**/*'
-    - 'db/schema.rb'
-    - 'node_modules/**/*'
-    - 'vendor/**/*'
+    - "vendor/**/*"
 
 Rails:
   Enabled: true
@@ -20,3 +17,28 @@ Style/Documentation:
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
+
+# rails default files things
+Layout/LineLength:
+  Exclude:
+    - bin/bundle
+
+Metrics/BlockLength:
+  Exclude:
+    - config/environments/development.rb
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - bin/bundle
+
+Metrics/MethodLength:
+  Exclude:
+    - bin/bundle
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - bin/bundle
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - db/migrate/20240401075141_add_service_name_to_active_storage_blobs.active_storage.rb

@@ -9,7 +9,7 @@ class ReportController < ApplicationController
     @dates = reports.pluck(:date).uniq.sort
     @values = reports.group_by(&:name).map do |name, value|
       {
-        name: name,
+        name:,
         data: extract_data(value),
         marker: { symbol: 'circle' },
       }
@@ -21,7 +21,7 @@ class ReportController < ApplicationController
     @dates = reports.pluck(:date).uniq.sort
     @values = reports.group_by(&:name).map do |name, value|
       {
-        name: name,
+        name:,
         data: extract_data(value),
         marker: { symbol: 'circle' },
       }
@@ -41,8 +41,12 @@ class ReportController < ApplicationController
 
   def extract_data(values)
     values.group_by(&:date).map do |key, value|
-      [key.to_s, value.inject(0.0) { |sum, item| sum + item.activity.to_f }]
+      [key.to_s, total(value)]
     end
+  end
+
+  def total(value)
+    value.inject(0.0) { |sum, item| sum + item.activity.to_f }
   end
 
   def date
