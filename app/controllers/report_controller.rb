@@ -5,49 +5,18 @@ class ReportController < SecuredController
   def index; end
 
   def all
-    reports = @report.with_visible_categories.select(:date, :activity, :category_id, :name)
-    @dates = reports.pluck(:date).uniq.sort
-    @values = reports.group_by(&:name).map do |name, value|
-      {
-        name:,
-        data: extract_data(value),
-        marker: { symbol: 'circle' },
-      }
-    end
+    @reports = @report.with_visible_categories.select(:date, :activity, :category_id, :name)
   end
 
   def yearly
-    reports = @report.with_visible_categories.select(:date, :activity, :category_id, :name)
-    @dates = reports.pluck(:date).uniq.sort
-    @values = reports.group_by(&:name).map do |name, value|
-      {
-        name:,
-        data: extract_data(value),
-        marker: { symbol: 'circle' },
-      }
-    end
+    @reports = @report.with_visible_categories.select(:date, :activity, :category_id, :name)
   end
 
   def category
-    reports = @report.select(:date, :activity)
-    @dates = reports.pluck(:date).uniq.sort
-    @values = [{
-      name: @category.name,
-      data: extract_data(reports),
-    }]
+    @reports = @report.select(:date, :activity, :budgeted)
   end
 
   private
-
-  def extract_data(values)
-    values.group_by(&:date).map do |key, value|
-      [key.to_s, total(value)]
-    end
-  end
-
-  def total(value)
-    value.inject(0.0) { |sum, item| sum + item.activity.to_f }
-  end
 
   def date
     return "#{params[:year]}-01-01".to_date if params[:year]
@@ -70,10 +39,6 @@ class ReportController < SecuredController
     return unless params[:year]
 
     @year = date.year
-    @report = @report.within_range(range)
-  end
-
-  def range
-    date.all_year
+    @report = @report.within_range(date.all_year)
   end
 end

@@ -10,8 +10,6 @@ detectors:
   InstanceVariableAssumption:
     exclude:
       - "/Controller$/"
-  TooManyInstanceVariables:
-    max_instance_variables: 5
 
 directories:
   "db/migrate":
