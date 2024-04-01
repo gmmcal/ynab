@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ReportController < ApplicationController
+class ReportController < SecuredController
   before_action :report, :load_category, :year
   def index; end
 

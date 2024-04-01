@@ -1,0 +1,11 @@
+<%= form_for :auth, url: auths_path do |form| %>
+  <% flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, class: 'text-bg-danger p-2 mt-2 mb-2' %>
+  <% end -%>
+
+  <div class="form-floating">
+    <%= form.text_field :password, placeholder: 'password', class: 'form-control' %>
+    <%= form.label :password %>
+  </div>
+  <%= form.submit 'Sign in', class:'btn btn-primary w-100 py-2' %>
+<% end %>
