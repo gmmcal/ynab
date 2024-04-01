@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    networks:
+      - db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ynab_development
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      target: development
+    image: gmmcal-ynab:development
+    command: bin/rails server -b 0.0.0.0
+    depends_on:
+      - db
+    networks:
+      - db
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+    ports:
+      - "3000:3000"
+
+networks:
+  db:

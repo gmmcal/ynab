@@ -8,13 +8,8 @@ class Importer
   end
 
   def process
-    ActiveRecord::Base.transaction do
-      process_months
-    end
+    ActiveRecord::Base.transaction { process_months }
     Rails.logger.info { 'Data successfully imported' }
-  rescue StandardError => e
-    Rails.logger.info { "ERROR: id=#{e.id}; name=#{e.name}; detail: #{e.detail}" }
-    nil
   end
 
   private
@@ -33,7 +28,7 @@ class Importer
   end
 
   def parent(name)
-    Category.find_or_create_by(name: name)
+    Category.find_or_create_by(name:)
   end
 
   def update_category(category, note, visible)

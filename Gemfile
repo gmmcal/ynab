@@ -60,6 +60,7 @@ end
 
 group :development do
   gem 'brakeman'
+  gem 'bundler-audit'
   gem 'reek'
   gem 'rubocop'
   gem 'rubocop-capybara'

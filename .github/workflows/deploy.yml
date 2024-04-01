@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+  workflow_call:
+
+jobs:
+  build_production:
+    name: "Build: Production"
+    uses: ./.github/workflows/_docker.yml
+    secrets: inherit
+    with:
+      target: production
+
+  build_development:
+    name: "Build: Development"
+    uses: ./.github/workflows/_docker.yml
+    secrets: inherit
+    with:
+      target: development
+    if: github.event_name == 'push'
