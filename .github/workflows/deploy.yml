@@ -4,22 +4,41 @@ on:
   push:
     branches:
       - main
-  release:
-    types: [published]
-  workflow_call:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
 
 jobs:
+  tag:
+    name: "Tag: Production"
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_tag.yml@v0
+
+  release:
+    name: Release
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_release.yml@v0
+    secrets: inherit
+    needs: tag
+    with:
+      tag: ${{needs.tag.outputs.version}}
+
   build_production:
-    name: "Build: Production"
-    uses: ./.github/workflows/_docker.yml
+    name: Build
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v0
+    needs:
+      - tag
     secrets: inherit
     with:
+      name: Production
       target: production
+      reference: ${{needs.tag.outputs.version}}
+      image: "gmmcal/ynab:${{needs.tag.outputs.version}},gmmcal/ynab:production"
 
   build_development:
-    name: "Build: Development"
-    uses: ./.github/workflows/_docker.yml
+    name: Build
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v0
     secrets: inherit
     with:
+      name: Development
       target: development
-    if: github.event_name == 'push'
+      image: "gmmcal/ynab:development"
