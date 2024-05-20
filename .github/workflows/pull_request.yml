@@ -3,59 +3,82 @@ name: Pipeline
 on:
   - pull_request
 
+concurrency:
+  group: pull-request-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  # DOCKER
   build:
-    name: Test
-    uses: ./.github/workflows/_docker.yml
+    name: Build Image
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v0
     secrets: inherit
+    with:
+      name: Test
+      image: "gmmcal/ynab:test"
 
   development:
-    name: Development
-    uses: ./.github/workflows/_docker.yml
+    name: Build Image
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v0
     secrets: inherit
     with:
+      name: Development
       target: development
       publish: false
+      image: gmmcal/ynab:development
 
   production:
-    name: Production
-    uses: ./.github/workflows/_docker.yml
+    name: Build Image
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v0
     secrets: inherit
     with:
+      name: Production
       target: production
       publish: false
+      image: gmmcal/ynab:production
 
+  # LINT
   rubocop:
-    name: Rubocop
-    uses: ./.github/workflows/_lint.yml
+    name: Lint
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v0
     with:
+      name: Rubocop
+      image: gmmcal/ynab:test
       command: bundle exec rubocop --config .rubocop.yml .
     needs: build
 
   reek:
-    name: Reek
-    uses: ./.github/workflows/_lint.yml
+    name: Lint
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v0
     with:
+      name: Reek
+      image: gmmcal/ynab:test
       command: bundle exec reek --config .reek.yml .
     needs: build
 
   brakeman:
-    name: Brakeman
-    uses: ./.github/workflows/_lint.yml
+    name: Lint
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v0
     with:
+      name: Brakeman
+      image: gmmcal/ynab:test
       command: bundle exec brakeman
     needs: build
 
-  tests:
-    name: Backend
-    uses: ./.github/workflows/_tests.yml
+  bundler-audit:
+    name: Lint
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v0
     with:
-      command: bundle exec rails test
+      name: Bundler Audit
+      image: gmmcal/ynab:test
+      command: bundle exec bundle-audit check --update
     needs: build
 
-  bundler-audit:
-    name: Bundler Audit
-    uses: ./.github/workflows/_lint.yml
+  # TESTS
+  tests:
+    name: Tests
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_tests.yml@v0
     with:
-      command: bundle exec bundle-audit check --update
+      image: gmmcal/ynab:test
+      command: bundle exec rails test
     needs: build
