@@ -15,7 +15,7 @@ jobs:
     secrets: inherit
     with:
       name: Test
-      image: "gmmcal/ynab:test"
+      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
 
   development:
     name: Build Image
@@ -43,7 +43,7 @@ jobs:
     uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v0
     with:
       name: Rubocop
-      image: gmmcal/ynab:test
+      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
       command: bundle exec rubocop --config .rubocop.yml .
     needs: build
 
@@ -52,7 +52,7 @@ jobs:
     uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v0
     with:
       name: Reek
-      image: gmmcal/ynab:test
+      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
       command: bundle exec reek --config .reek.yml .
     needs: build
 
@@ -61,7 +61,7 @@ jobs:
     uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v0
     with:
       name: Brakeman
-      image: gmmcal/ynab:test
+      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
       command: bundle exec brakeman
     needs: build
 
@@ -70,7 +70,7 @@ jobs:
     uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v0
     with:
       name: Bundler Audit
-      image: gmmcal/ynab:test
+      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
       command: bundle exec bundle-audit check --update
     needs: build
 
@@ -79,6 +79,6 @@ jobs:
     name: Tests
     uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_tests.yml@v0
     with:
-      image: gmmcal/ynab:test
+      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
       command: bundle exec rails test
     needs: build
