@@ -29,6 +29,7 @@ jobs:
     name: Build
     uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v0
     needs:
+      - tag
       - release
     secrets: inherit
     with:
