@@ -9,13 +9,13 @@ class Importer
 
   def process
     ActiveRecord::Base.transaction { process_months }
-    Rails.logger.info { 'Data successfully imported' }
+    Rails.logger.info { "Data successfully imported" }
   end
 
   private
 
   def cleanup
-    Rails.logger.info { 'Cleaning old reports' }
+    Rails.logger.info { "Cleaning old reports" }
     Report.delete_all
   end
 
@@ -54,7 +54,7 @@ class Importer
   end
 
   def budget
-    budgets.select { |budget| budget.name == 'Personal' }.first
+    budgets.select { |budget| budget.name == "Personal" }.first
   end
 
   def budgets

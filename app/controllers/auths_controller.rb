@@ -7,13 +7,13 @@ class AuthsController < ApplicationController
       redirect_to root_path
     else
       session[:authenticated] = nil
-      redirect_to new_auth_path, flash: { danger: 'Invalid password' }
+      redirect_to new_auth_path, flash: { danger: "Invalid password" }
     end
   end
 
   private
 
   def password
-    ENV.fetch('APPLICATION_PASSWORD', 'password')
+    ENV.fetch("APPLICATION_PASSWORD", "password")
   end
 end

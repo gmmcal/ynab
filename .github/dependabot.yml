@@ -8,6 +8,8 @@ updates:
   - package-ecosystem: "bundler"
     directory: "/"
     open-pull-requests-limit: 50
+    commit-message:
+      prefix: "OPT"
     schedule:
       interval: "weekly"
       time: "08:00"
