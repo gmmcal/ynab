@@ -10,25 +10,25 @@ module ReportsHelper
       {
         name:,
         data: extract_data(value),
-        marker: { symbol: 'circle' },
+        marker: { symbol: "circle" }
       }
     end
   end
 
   def category_values(reports)
-    [{
-      name: 'Activity',
-      data: extract_data(reports),
+    [ {
+      name: "Activity",
+      data: extract_data(reports)
     }, {
-      name: 'Budgeted',
+      name: "Budgeted",
       data: extract_data(reports, :budgeted),
-      type: :spline,
-    }]
+      type: :spline
+    } ]
   end
 
   def extract_data(values, field = :activity)
     values.group_by(&:date).map do |key, value|
-      [key.to_s, total(value, field)]
+      [ key.to_s, total(value, field) ]
     end
   end
 
