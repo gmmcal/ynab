@@ -1,0 +1,12 @@
+name: Dependabot
+
+on:
+  - pull_request
+
+jobs:
+  run:
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_dependabot.yml@v0
+    with:
+      pull-request-url: ${{ github.event.pull_request.html_url }}
+    secrets:
+      token: ${{ secrets.PAT_TOKEN }}
