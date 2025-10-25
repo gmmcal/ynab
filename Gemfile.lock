@@ -410,7 +410,7 @@ DEPENDENCIES
   ynab
 
 RUBY VERSION
-   ruby 3.3.6p108
+   ruby 3.4.7p58
 
 BUNDLED WITH
-   2.5.23
+   2.7.2
