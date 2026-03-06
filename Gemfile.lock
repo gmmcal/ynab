@@ -374,7 +374,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    ynab (4.9.0)
+    ynab (5.0.0)
       typhoeus (~> 1.0, >= 1.0.1)
     zeitwerk (2.7.5)
 
