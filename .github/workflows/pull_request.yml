@@ -86,7 +86,7 @@ jobs:
   # TESTS
   tests:
     name: Tests
-    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_tests.yml@v1.3.4
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_tests.yml@v1.3.6
     with:
       image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
       command: bundle exec rails test
