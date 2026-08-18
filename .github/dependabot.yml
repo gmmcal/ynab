@@ -8,6 +8,8 @@ updates:
   - package-ecosystem: "bundler"
     directory: "/"
     open-pull-requests-limit: 50
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: "OPT"
     schedule:
@@ -19,6 +21,8 @@ updates:
   - package-ecosystem: github-actions
     directory: "/"
     open-pull-requests-limit: 50
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: "OPT"
     schedule:
@@ -27,3 +31,14 @@ updates:
       timezone: "Europe/Amsterdam"
     assignees:
       - gmmcal
+    allow:
+      - dependency-name: "*"
+        dependency-type: "all"
+        update-types:
+          - "version-update:semver-patch"
+          - "version-update:semver-minor"
+          - "version-update:semver-major"
+      - dependency-name: "gmmcal/gmmcal-reusable-workflows/*"
+        dependency-type: "all"
+        update-types:
+          - "version-update:semver-major"
