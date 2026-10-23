@@ -1,9 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+visible_category:
+  name: Food
+  note: Groceries
+  visible: true
 
-one:
-  id: 1
-  name: Name
+hidden_category:
+  name: Travel
+  note: Hidden category
+  visible: false
 
-two:
-  id: 2
-  name: Groceries
+rent_category:
+  name: Rent
+  note: Monthly housing
+  visible: true
