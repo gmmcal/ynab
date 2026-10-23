@@ -1,17 +1,20 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+visible_report:
+  category: visible_category
+  budgeted: 1200.000
+  activity: -200.000
+  balance: 1000.000
+  date: 2024-01-15
 
-one:
-  id: 1
-  category_id: 1
-  budgeted: 1
-  activity: 1
-  balance: 1
-  date: 2021-01-01
+hidden_report:
+  category: hidden_category
+  budgeted: 300.000
+  activity: -50.000
+  balance: 250.000
+  date: 2024-02-15
 
-two:
-  id: 2
-  category_id: 2
-  budgeted: 1
-  activity: 1
-  balance: 1
-  date: 2021-02-01
+january_report:
+  category: rent_category
+  budgeted: 1500.000
+  activity: -75.000
+  balance: 1425.000
+  date: 2024-01-05

@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 ENV["RAILS_ENV"] ||= "test"
+
+require "simplecov"
+SimpleCov.start "rails" do
+  skip "/test/"
+  skip "/config/"
+  skip "/vendor/"
+  skip "/bin/"
+  minimum_coverage 90
+  coverage(:line) { minimum 70, per: :file }
+  formatter SimpleCov::Formatter::HTMLFormatter
+end
+
 require_relative "../config/environment"
 require "rails/test_help"
 
