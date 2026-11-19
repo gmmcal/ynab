@@ -82,8 +82,9 @@ jobs:
   # TESTS
   tests:
     name: Tests
-    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_tests.yml@v1
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_tests.yml@v2
     with:
-      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
+      ruby-version: "4.0.7"
       command: bundle exec rails test
-    needs: build
+      migration-command: bundle exec rails db:migrate
+      database-name: ynab_test
