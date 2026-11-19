@@ -29,7 +29,7 @@ jobs:
 
   build_production:
     name: Build
-    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v1
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v2
     needs:
       - tag
       - release
@@ -41,10 +41,12 @@ jobs:
       target: production
       reference: ${{needs.tag.outputs.version}}
       image: "gmmcal/ynab:${{needs.tag.outputs.version}},gmmcal/ynab:production"
+      cache_from: main
+      cache_to: main
 
   build_development:
     name: Build
-    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v1
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_docker.yml@v2
     secrets:
       dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
       dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -55,3 +57,5 @@ jobs:
       name: Development
       target: development
       image: "gmmcal/ynab:development"
+      cache_from: development-${{ github.event.repository.default_branch }}
+      cache_to: development-${{ github.event.repository.default_branch }}
