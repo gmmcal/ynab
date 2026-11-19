@@ -49,39 +49,35 @@ jobs:
   # LINT
   rubocop:
     name: Lint
-    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v1
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v2
     with:
       name: Rubocop
-      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
+      ruby-version: "4.0.7"
       command: bin/rubocop
-    needs: build
 
   reek:
     name: Lint
-    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v1
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v2
     with:
       name: Reek
-      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
+      ruby-version: "4.0.7"
       command: bundle exec reek --config .reek.yml 1
-    needs: build
 
   brakeman:
     name: Lint
-    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v1
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v2
     with:
       name: Brakeman
-      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
+      ruby-version: "4.0.7"
       command: bin/brakeman
-    needs: build
 
   bundler-audit:
     name: Lint
-    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v1
+    uses: gmmcal/gmmcal-reusable-workflows/.github/workflows/_lint.yml@v2
     with:
       name: Bundler Audit
-      image: "gmmcal/ynab:test-${{ github.event.number }}-${{ github.run_number }}"
+      ruby-version: "4.0.7"
       command: bundle exec bundle-audit check --update
-    needs: build
 
   # TESTS
   tests:
